@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Day 1</title>
+    <style>
+      body {
+        /* margin: 10px 30px; */
+        margin: auto;
+        padding: auto ;
+        margin-top:10px;
+        border: 1px solid black;
+        border-radius: 1rem;
+        width: 500px;
+        justify-content: center;
+      }
+      .home {
+        padding: 10px 10px;
+        display: flex;
+        /* flex-direction:column; */
+        column-gap: 5rem;
+        justify-content: center;
+        align-items: center;
+       
+      }
+
+      .member {
+        border: 1px solid black;
+        display: flex;
+        flex-direction: column;
+        row-gap: 2rem;
+        padding: 0px 5px;
+        border-radius: 0.5rem;
+      }
+      span {
+        margin: 5px;
+        border-radius: 1rem;
+        background-color: yellow;
+        border: none;
+      }
+    </style>
+  </head>
+  <body>
+    <form class="home">
+      
+        <div class="index">
+          <h2>Update Variables</h2>
+
+          <label>Name (String):</label>
+          <div><input type="text" /></div>
+
+          <label>Age (Number):</label>
+          <div><input type="number" /></div>
+
+          <label>VIP Status (Boolean):</label>
+
+          <div>
+            <input type="checkbox" />
+          </div>
+          <label>Card Color:</label>
+          <div><input type="color" /></div>
+        </div>
+
+        <div>
+          <h2>Live DOM Output</h2>
+          <div class="member">
+            <span>VIP MEMBER</span>
+            <label>Hello Hello</label>
+            <label>Age:32</label>
+          </div>
+        </div>
+      
+    </form>
+  </body>
+</html>

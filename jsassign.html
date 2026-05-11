@@ -1,0 +1,177 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Calculator</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      /* body {
+        background-color: whitesmoke;
+      } */
+      .container {
+        /* width: 500px; */
+        background-color: rgb(237, 215, 215);
+        height: 100vh;
+        /* border-radius: 10px; */
+        margin: auto;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+
+      .title {
+        width: 400px;
+        height: 300px;
+        background-color: white;
+        border-radius: 10px;
+        /* margin: auto;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center; */
+      }
+
+      h2 {
+        text-align: center;
+        margin: 30px 30px;
+      }
+
+      .box {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        gap: 30px;
+        /* width:300px; */
+        /* padding:30px; */
+        /* background-color: yellow; */
+      }
+      .main {
+        width: 300px;
+        display: flex;
+        column-gap: 25px;
+        /* background-color: green; */
+      }
+      .user-input {
+        width: 100px;
+        height: 30px;
+        border-radius: 5px;
+        border: 1px solid black;
+        padding: 15px;
+      }
+
+      select {
+        width: 50px;
+        padding-left: 10px;
+        border-radius: 5px;
+        font-size: 20px;
+      }
+
+      .btn {
+        width: 300px;
+        height: 40px;
+        background-color: blue;
+        color: white;
+        font-weight: bold;
+        /* padding:15px; */
+        border-radius: 5px;
+        border: none;
+        margin-bottom: 30px;
+        cursor: pointer;
+      }
+
+      .btn:hover{
+        background-color: gray;
+      }
+
+      .footer {
+        width: 300px;
+        height: 40px;
+        /* background-color:gray; */
+        border: 1px dotted black;
+        padding: 10px 10px;
+        display: flex;
+        justify-content: space-between;
+      }
+
+      span {
+        color: green;
+        font-weight: bold;
+      }
+    </style>
+  </head>
+  <body>
+    <section class="container">
+      <div class="title">
+        <h2>Mini Calculator</h2>
+        <div class="box">
+          <div class="main">
+            <input type="number" id="number1" class="user-input" placeholder="number1" />
+            <select id="operator">
+              <option value="+">+</option>
+              <option value="-">-</option>
+              <option value="*">*</option>
+              <option value="/">/</option>
+              <option value="">Choose</option>
+            </select>
+            <input type="number" id="number2" class="user-input" placeholder="number2" />
+          </div>
+
+          <div class="result">
+            <button class="btn" onclick="calculate()" id="calculate">
+              Calculate Amount
+            </button>
+            <p class="footer">Result:<span id="numberOutput">---</span></p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <script>
+      const number1 = document.getElementById("number1");
+      const number2 = document.getElementById("number2");
+      const operator = document.getElementById("operator");
+      // const calculate = document.getElementById("calculate");
+
+      const numberOutput = document.getElementById("numberOutput");
+
+      //calculate.addEventListener("click", () =>
+      function calculate() {
+        const num1 = Number(number1.value);
+        const num2 = parseFloat(number2.value);
+        const op = operator.value;
+
+        if(number1.value===""|| number2.value===""){   //if(isNaN(num1) || isNaN(num2))
+          numberOutput.textContent="Please enter a number";
+          return;
+        }
+
+        let result = 0;
+
+        switch (op) {
+          case "+":
+            result = num1 + num2;
+            break;
+          case "-":
+            result = num1 - num2;
+            break;
+          case "*":
+            result = num1 * num2;
+            break;
+          case "/":
+            result = num2 !==0 ? num1/num2 :"Can't divided by zero";
+            break;
+          default:
+            result = "Please choose an operator";
+        }
+        numberOutput.textContent = result;
+      }
+    </script>
+  </body>
+</html>

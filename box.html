@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Box Model</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        background-color: blue;
+      }
+
+      h1 {
+        border: 1px solid black;
+        border-radius: 30px;
+        width: 400px;
+        height: 250px;
+        text-align: center;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin: auto;
+        background-color: white;
+      }
+
+      .yellow {
+        background-color: burlywood;
+        width: 500px;
+        height: 300px;
+        border: 5px solid red;
+        /* padding-top: 50px; */
+        border-radius: 20px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin: auto;
+        margin-top: 100px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="yellow">
+      <h1>Card Content</h1>
+    </div>
+  </body>
+</html>
