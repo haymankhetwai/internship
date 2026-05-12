@@ -75,15 +75,15 @@
         font-size: 20px;
       }
 
-      .ope{
+      .ope {
         width: 50px;
         height: 50px;
         border-radius: 50%;
         background-color: rgb(211, 111, 127);
-        color:white;
-        border:none;
+        color: white;
+        border: none;
         font-weight: bold;
-         font-size: 20px;
+        font-size: 20px;
       }
 
       .line {
@@ -130,141 +130,120 @@
     </div>
 
     <script>
-      let display = document.getElementById("display");
       function appendValue(value) {
-        // let operators = ["+", "-", "*", "/", "%" ,"."];
-        // let lastChar = display.value.slice(-1);
-
-        // if (operators.includes(value) && operators.includes(lastChar)) {
-        //   //display.value = display.value.slice(0, -1) + value;
-        //   return;
-        // }
-
-        // if (display.value === "0" ) {
-        //   display.value = value;
-        // } else {
-        //   display.value += value;
-        // }
-
-        // let operators = ["+", "-", "*", "/", "%" ,"."];
-
-        // let lastChar = display.value.slice(-1);
-
-        // // operator နှစ်ခါမထည့်စေချင်
-        // if (operators.includes(value) && operators.includes(lastChar)) {
-        //   return;
-        // }
-
-        // // 0 ရှိနေရင် number ပဲအစားထိုး
-        // if (display.value === "0") {
-        //   if (operators.includes(value)) {
-        //     return;
-        //   } else {
-        //     display.value = value;
-        //     return;
-        //   }
-        // }
-
-        // display.value += value;
-
         let operators = ["+", "-", "*", "/", "%", "."];
 
         let start = display.selectionStart;
+        let end = display.selectionEnd;
+        let charBefore = display.value.substring(start - 1, start);
 
-        let beforeCursor = display.value[start - 1];
-
-        
-        if (operators.includes(value) && operators.includes(beforeCursor)) {
+        if (operators.includes(value) && operators.includes(charBefore)) {
           return;
         }
 
         if (display.value === "0" && !operators.includes(value)) {
           display.value = value;
-          return;
+          display.setSelectionRange(1, 1);
+        } else {
+          display.setRangeText(value, start, end, "end");
         }
 
-      
-        display.setRangeText(value, start, start, "end");
-
         display.focus();
-
-        // updateCursor();
       }
+      // updateCursor();
 
       function clearAll() {
         display.value = "0";
-        // display.focus();
-        // display.setSelectionRange(display.value.length, display.value.length);
+        display.focus();
+        display.setSelectionRange(1, 1);
       }
 
       function deleteOne() {
-        // if(display.value.length >1){
-        //   display.value=display.value.slice(0,-1);
-        // }else{
-        //   display.value="0";
-        // }
-        display.value =
-          display.value.length > 1 ? display.value.slice(0, -1) : "0";
+        let start = display.selectionStart;
+        let end = display.selectionEnd;
+
+        if (display.value.includes("=") || display.value === "Error") {
+          display.value = "0";
+          display.setSelectionRange(1, 1);
+        } else {
+          if (start === end && start > 0) {
+            display.value =
+              display.value.substring(0, start - 1) +
+              display.value.substring(end);
+            display.setSelectionRange(start - 1, start - 1);
+          } else {
+            display.setRangeText("", start, end, "end");
+          }
+
+          if (display.value === "") display.value = "0";
+        }
+        display.focus();
 
         //updateCursor();
       }
 
       function calculate() {
-        //display.value=Function("return" +display.value)();
-        //display.value=eval(display.value);
-        // try {
-        //   display.value ="=" + eval(display.value);
-        // } catch {
-        //   display.value = "Error";
-        // }
+        let val = display.value;
+        if (val === "0" || val.includes("=") || val === "") return;
+
         try {
-          let currentValue = display.value;
-
-          if (currentValue.includes("%") && /\d%\d/.test(currentValue)) {
-            display.value = "=" + eval(currentValue);
-          } else {
-            let newValue = currentValue.replace(/%/g, "/100");
-            // let result=Number(currentValue/100);
-
-            let result = eval(newValue);
-
-            display.value = "=" + result;
+          if (/%[0-9]/.test(val)) {
+            //throw new Error("Modulus not allowed");
+            return;
           }
 
-          // let newValue=currentValue.replace(/%/g,'/100');
+          let expression = val.replace(/÷/g, "/").replace(/%/g, "/100");
+          let result = eval(expression);
 
-          // let result=eval(newValue);
+          if (!Number.isInteger(result)) {
+            result = parseFloat(result.toFixed(8));
+          }
 
-          // display.value="=" + result;
-        } catch {
+          display.value = result;
+          display.focus();
+          display.setSelectionRange(display.value.length, display.value.length);
+        } catch (e) {
           display.value = "Error";
         }
+        // display.focus();
       }
 
       function appendBracket() {
+        if (display.value.startsWith("=")) display.value = "";
+
+        let start = display.selectionStart;
+        let end = display.selectionEnd;
+
         let str = display.value;
 
         let openCount = str.split("(").length - 1;
 
         let closeCount = str.split(")").length - 1;
 
-        let lastValue = str.slice(-1);
+        let charBefore = str.substring(start - 1, start);
 
-        if (openCount > closeCount && !isNaN(lastValue)) {
-          display.value = display.value + ")";
+        let bracket = "";
+
+        if (
+          openCount > closeCount &&
+          charBefore !== "" &&
+          !isNaN(charBefore) &&
+          charBefore !== "("
+        ) {
+          bracket = ")";
         } else {
-          if (display.value === "0") {
-            display.value = "(";
-          } else {
-            display.value = display.value + "(";
-          }
+          bracket = "(";
         }
-      }
 
-      // function updateCursor() {
-      //   display.focus();
-      //   display.setSelectionRange(display.value.length, display.value.length);
-      // }
+        if (display.value === "0") {
+          display.value = bracket;
+          display.setSelectionRange(1, 1);
+        } else {
+          display.setRangeText(bracket, start, end, "end");
+        }
+
+        display.focus();
+      }
     </script>
   </body>
 </html>
