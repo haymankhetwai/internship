@@ -130,11 +130,57 @@
     </div>
 
     <script>
+      // const display = document.getElementById("display");
+      let isResultDisplayed = false;
       function appendValue(value) {
         let operators = ["+", "-", "*", "/", "%", "."];
+        let currentVal = display.value;
+
+        if (isResultDisplayed) {
+          if (!operators.includes(value)) {
+            // ဂဏန်းနှိပ်ရင် အသစ်ကနေ ပြန်စမယ်
+            display.value = value;
+            isResultDisplayed = false;
+            display.focus();
+            display.setSelectionRange(
+              display.value.length,
+              display.value.length,
+            );
+            return; // ဒီမှာတင် ရပ်လိုက်မယ် (အောက်က logic တွေ ဆက်မလုပ်အောင်)
+          } else {
+            // Operator နှိပ်ရင် အဖြေဟောင်းကို ဆက်တွက်မယ်
+            isResultDisplayed = false;
+          }
+        }
 
         let start = display.selectionStart;
         let end = display.selectionEnd;
+
+        // if (isResultDisplayed && !operators.includes(value)) {
+        //   display.value = "";
+        //   currentVal = "";
+        //   isResultDisplayed = false;
+        // } else if (isResultDisplayed && operators.includes(value)) {
+        //
+        //   isResultDisplayed = false;
+        // }
+
+        if (currentVal === "Error" || currentVal === "Infinity") {
+          display.value = isNaN(value) && value !== "." ? "0" : "";
+          currentVal = display.value;
+        }
+
+        // if (value === ".") {
+        //   let lastNumber = currentVal.split(/[\+\-\*\/%]/).pop();
+        //   if (lastNumber.includes(".")) return;
+        // }
+
+        if (value === ".") {
+          let parts = currentVal.split(/[\+\-\*\/%\(\)]/);
+          let lastPart = parts[parts.length - 1];
+
+          if (lastPart.includes(".")) return;
+        }
         let charBefore = display.value.substring(start - 1, start);
 
         if (operators.includes(value) && operators.includes(charBefore)) {
@@ -183,29 +229,54 @@
       }
 
       function calculate() {
+        // let val = display.value;
+        // if (val === "0" || val.includes("=") || val === "") return;
+
+        // try {
+        //   if (/%[0-9]/.test(val)) {
+        //     //throw new Error("Modulus not allowed");
+        //     return;
+        //   }
+
+        //   let expression = val.replace(/÷/g, "/").replace(/%/g, "/100");
+        //   let result = eval(expression);
+
+        //   if (!Number.isInteger(result)) {
+        //     result = parseFloat(result.toFixed(8));
+        //   }
+
+        //   display.value = result;
+        //   display.focus();
+        //   display.setSelectionRange(display.value.length, display.value.length);
+        // } catch (e) {
+        //   display.value = "Error";
+        // }
+        // display.focus();
+
         let val = display.value;
-        if (val === "0" || val.includes("=") || val === "") return;
+        if (val === "0" || val === "") return;
 
         try {
-          if (/%[0-9]/.test(val)) {
-            //throw new Error("Modulus not allowed");
-            return;
-          }
+          let expression = val
+            .replace(/÷/g, "/")
+            .replace(/%/g, "/100")
+            .replace(/\)(\d|\()/g, ")*$1")
+            .replace(/(\d)\(/g, "$1*(");
 
-          let expression = val.replace(/÷/g, "/").replace(/%/g, "/100");
           let result = eval(expression);
+
+          if (!Number.isFinite(result)) throw new Error();
 
           if (!Number.isInteger(result)) {
             result = parseFloat(result.toFixed(8));
           }
 
           display.value = result;
-          display.focus();
-          display.setSelectionRange(display.value.length, display.value.length);
+          isResultDisplayed = true;
         } catch (e) {
           display.value = "Error";
         }
-        // display.focus();
+        display.focus();
       }
 
       function appendBracket() {
