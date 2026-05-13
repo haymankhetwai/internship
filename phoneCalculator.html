@@ -138,7 +138,7 @@
 
         if (isResultDisplayed) {
           if (!operators.includes(value)) {
-            // ဂဏန်းနှိပ်ရင် အသစ်ကနေ ပြန်စမယ်
+            
             display.value = value;
             isResultDisplayed = false;
             display.focus();
@@ -146,9 +146,9 @@
               display.value.length,
               display.value.length,
             );
-            return; // ဒီမှာတင် ရပ်လိုက်မယ် (အောက်က logic တွေ ဆက်မလုပ်အောင်)
+            return; 
           } else {
-            // Operator နှိပ်ရင် အဖြေဟောင်းကို ဆက်တွက်မယ်
+            
             isResultDisplayed = false;
           }
         }
