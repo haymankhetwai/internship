@@ -1,0 +1,95 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Simulator</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+  </head>
+  <body class="bg-gray-300">
+    <section class="w-1/2 flex flex-col mx-auto gap-4 justify-center mt-8 h-full">
+      <!-- title open-->
+      <div class="">
+        <h1 class="text-2xl font-bold">CSS Utility Simulator</h1>
+        <p class="">
+          Change the inputs below to see how atomic classes combine to build
+          UIs.
+        </p>
+      </div>
+      <!-- title close -->
+
+      <!-- nav bar -->
+
+      <nav class="flex justify-between items-center bg-black p-2">
+        <div class="text-white font-bold text-lg">MyLogo</div>
+
+        <div class="flex jusify-between text-white gap-4">
+          <a href="">Home</a>
+          <a href="">About</a>
+          <a href="">Contact</a>
+        </div>
+      </nav>
+
+      <!-- nav bar close -->
+
+      <!-- feature -->
+      <div class="flex justify-between gap-4 p-4">
+        <div class="w-80 text-center bg-blue-300 outline-none rounded-md py-2">Feature 1</div>
+        <div class="w-80 text-center bg-blue-300  outline-none rounded-md py-2">Feature 2</div>
+        <div class="w-80 text-center bg-blue-300 outline-none rounded-md py-2">Feature 3</div>
+      </div>
+      <!-- feature close -->
+
+      <!-- left -->
+      <div class="flex justify-between gap-4">
+        <div class="flex-1 flex flex-col bg-white w-1/2 rounded-lg p-4 gap-4">
+          <h2 class="text-xl font-bold">Utility Controls</h2>
+          <label for="">Padding (Spacing)</label>
+          <select class="border border-gray-300 rounded-md bg-gray-200 p-2 outline-none">
+            <option value="Medium (p-8)">Medium (p-8)</option>
+          </select>
+
+          <label for="">Backgrounf Theme (Colors)</label>
+          <select class="border border-gray-300 rounded-md bg-gray-200 p-2 outline-none">
+            <option value="Primary Blue">Primary Blue</option>
+          </select>
+
+          <label for="">Text Size (Typography)</label>
+          <select class="border border-gray-300 rounded-md bg-gray-200 p-2 outline-none">
+            <option value="Large (text-xl)">Large (text-xl)</option>
+          </select>
+
+          <label for="">Corner Radius (Borders)</label>
+          <select class="border border-gray-300 rounded-md bg-gray-200 p-2 outline-none">
+            <option value="Square (rounded-none)">Square (rounded-none)</option>
+          </select>
+
+          <label for="">Shadow (Depth)</label>
+          <select class="border border-gray-300 rounded-md bg-gray-200 p-2 outline-none">
+            <option value="Medium (shadow-md)">Medium (shadow-md)</option>
+          </select>
+        </div>
+        <!-- left -->
+
+        <!-- right -->
+        <div class="flex-1 flex justify-center items-center bg-white rounded-lg p-4">
+          <div class="">
+            <h3>Alex Walker</h3>
+            <p>
+              Full-Stack Web Developer building awesome things with Tailwind
+              CSS.
+            </p>
+          </div>
+        </div>
+        <!-- right -->
+      </div>
+
+      <!-- footer -->
+      <div class="button">
+        <input type="submit" value="Submit" class="btn" />
+        <button class="btn">Hover Me Slowly!</button>
+      </div>
+      <!-- footer -->
+    </section>
+  </body>
+</html>

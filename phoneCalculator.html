@@ -136,6 +136,21 @@
         let operators = ["+", "-", "*", "/", "%", "."];
         let currentVal = display.value;
 
+        if (currentVal === "Error" || currentVal === "Infinity") {
+          if (operators.includes(value)) {
+            // Error ဖြစ်နေတုန်း ပေါင်း၊ နုတ်၊ မြှောက်၊ စား၊ %၊ . နှိပ်ရင် ဘာမှမလုပ်ဘူး
+            return; 
+          } else {
+            // ဂဏန်းနှိပ်မှသာ screen ကို ရှင်းပြီး အဲဒီဂဏန်းနဲ့ အသစ်ပြန်စမယ်
+            display.value = "";
+            currentVal = "";
+          }
+        }
+
+        if (currentVal === "0" && value === "%") {
+          return; 
+        }
+
         if (isResultDisplayed) {
           if (!operators.includes(value)) {
             
@@ -165,15 +180,15 @@
         //   isResultDisplayed = false;
         // }
 
-        if (currentVal === "Error" || currentVal === "Infinity") {
-          display.value = isNaN(value) && value !== "." ? "0" : "";
-          currentVal = display.value;
-        }
-
-        // if (value === ".") {
-        //   let lastNumber = currentVal.split(/[\+\-\*\/%]/).pop();
-        //   if (lastNumber.includes(".")) return;
+        // if (currentVal === "Error" || currentVal === "Infinity") {
+        //   display.value = isNaN(value) && value !== "." ? "0" : "";
+        //   currentVal = display.value;
         // }
+
+        if (value === ".") {
+          let lastNumber = currentVal.split(/[\+\-\*\/%]/).pop();
+          if (lastNumber.includes(".")) return;
+        }
 
         if (value === ".") {
           let parts = currentVal.split(/[\+\-\*\/%\(\)]/);
@@ -196,6 +211,25 @@
 
         display.focus();
       }
+
+      
+
+      // if (display.value === "0") {
+      //     if (value === "%" || value === "." || operators.includes(value)) {
+      //       // 0 ရှိနေတုန်း % သို့မဟုတ် operator တွေနှိပ်ရင် 0 အနောက်မှာ ဆက်ရေးမယ် (ဥပမာ 0%, 0+)
+      //       display.setRangeText(value, start, end, "end");
+      //     } else {
+      //       // ဂဏန်းနှိပ်ရင်တော့ 0 ကိုဖျက်ပြီး အဲဒီဂဏန်းနဲ့ အစားထိုးမယ်
+      //       display.value = value;
+      //       display.setSelectionRange(1, 1);
+      //     }
+      //   } else {
+      //     // ပုံမှန်အခြေအနေမှာ cursor ရှိတဲ့နေရာကနေ ဆက်ရိုက်မယ်
+      //     display.setRangeText(value, start, end, "end");
+      //   }
+
+      //   display.focus();
+      // }
       // updateCursor();
 
       function clearAll() {
@@ -280,6 +314,10 @@
       }
 
       function appendBracket() {
+        if (isResultDisplayed) {
+          isResultDisplayed = false; 
+        }
+
         if (display.value.startsWith("=")) display.value = "";
 
         let start = display.selectionStart;
