@@ -138,10 +138,8 @@
 
         if (currentVal === "Error" || currentVal === "Infinity") {
           if (operators.includes(value)) {
-            // Error ဖြစ်နေတုန်း ပေါင်း၊ နုတ်၊ မြှောက်၊ စား၊ %၊ . နှိပ်ရင် ဘာမှမလုပ်ဘူး
             return; 
           } else {
-            // ဂဏန်းနှိပ်မှသာ screen ကို ရှင်းပြီး အဲဒီဂဏန်းနဲ့ အသစ်ပြန်စမယ်
             display.value = "";
             currentVal = "";
           }
